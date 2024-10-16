@@ -9,21 +9,25 @@ public class User {
     private String password;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private boolean isSubscriber;
+    private boolean isSubtitler;
     private long points;
     private List<Movie> favoriteMovies;
-
+    private List<Subtitle> subtitles;
+    private List<Rating> ratings;
     private Level level;
 
-    public User(UUID id, String name, String email, String password, boolean isSubscriber, long points) {
+    public User(UUID id, String name, String email, String password, boolean isSubtitler, long points,
+                List<Subtitle> subtitles, List<Rating> ratings) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
-        this.isSubscriber = isSubscriber;
+        this.isSubtitler = isSubtitler;
         this.points = points;
+        this.subtitles = subtitles;
+        this.ratings = ratings;
     }
 
     public void updatePoints(long points) {
@@ -69,12 +73,12 @@ public class User {
         this.updatedAt = updatedAt;
     }
 
-    public boolean isSubscriber() {
-        return isSubscriber;
+    public boolean isSubtitler() {
+        return isSubtitler;
     }
 
-    public void setSubscriber(boolean subscriber) {
-        isSubscriber = subscriber;
+    public void setSubtitler(boolean isSubtitler) {
+        this.isSubtitler = isSubtitler;
     }
 
     public long getPoints() {
@@ -95,5 +99,21 @@ public class User {
 
     public void setLevel(Level level) {
         this.level = level;
+    }
+
+    public List<Subtitle> getSubtitles() {
+        return subtitles;
+    }
+
+    public List<Rating> getRatings() {
+        return ratings;
+    }
+
+    public void setSubtitles(List<Subtitle> subtitles) {
+        this.subtitles = subtitles;
+    }
+
+    public void setRatings(List<Rating> ratings) {
+        this.ratings = ratings;
     }
 }

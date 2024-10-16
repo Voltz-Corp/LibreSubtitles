@@ -9,14 +9,15 @@ public class Movie {
    private LocalDateTime updatedAt;
    private String title;
    private String language;
+   private String imageUrl;
    private LocalDateTime releaseDate;
    private List<String> genres;
    private String synopsis;
    private double rating;
    private List<Subtitle> subtitles;
 
-
-    public Movie(UUID id, String tmdbId, String title, String language, LocalDateTime releaseDate, List<String> genres, String synopsis, double rating) {
+    public Movie(UUID id, String tmdbId, String title, String imageUrl, String language, LocalDateTime releaseDate,
+                 List<String> genres, String synopsis, double rating) {
         this.id = id;
         this.tmdbId = tmdbId;
         this.title = title;
@@ -27,6 +28,7 @@ public class Movie {
         this.rating = rating;
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
+        this.imageUrl = imageUrl;
     }
 
     public UUID getId() {
@@ -107,5 +109,13 @@ public class Movie {
 
     public void setSubtitles(List<Subtitle> subtitles) {
         this.subtitles = subtitles;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

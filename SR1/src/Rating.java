@@ -4,18 +4,17 @@ public class Rating {
     private User user;
     private UUID id;
     private int rating;
+    private Subtitle subtitle;
 
-    public Rating(UUID id, int rating) {
+    public Rating(User user, UUID id, int rating, Subtitle subtitle) {
+        this.user = user;
         this.id = id;
         this.rating = rating;
+        this.subtitle = subtitle;
     }
 
     public User getUser() {
         return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public UUID getId() {
@@ -28,5 +27,9 @@ public class Rating {
 
     public void setRating(int rating) {
         this.rating = rating;
+    }
+
+    public Subtitle getSubtitle() {
+        return subtitle;
     }
 }

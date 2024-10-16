@@ -5,16 +5,21 @@ public class Comment {
     private User user;
     private UUID id;
     private String content;
+    private Subtitle subtitle;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private long upVotes;
     private long downVotes;
 
-    public Comment(UUID id, String content) {
+    public Comment(User user, UUID id, String content, Subtitle subtitle) {
+        this.user = user;
         this.id = id;
         this.content = content;
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
+        this.subtitle = subtitle;
+        this.upVotes = 0;
+        this.downVotes = 0;
     }
 
     public void upVote() {
@@ -24,16 +29,12 @@ public class Comment {
     public void downVote() {
     }
 
-    public long getVoteStats() {
+    public long getVotes() {
         return 0;
     }
 
     public User getUser() {
         return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public UUID getId() {
@@ -52,7 +53,6 @@ public class Comment {
         return createdAt;
     }
 
-
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
@@ -69,4 +69,7 @@ public class Comment {
         return downVotes;
     }
 
+    public Subtitle getSubtitle() {
+        return subtitle;
+    }
 }
