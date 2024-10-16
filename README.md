@@ -1,7 +1,7 @@
 ![libresubtitles](https://github.com/user-attachments/assets/ef1ac531-18ee-4a43-ae0b-5184161dad28)
 
 <p align=center>Uma aplicação Web voltada para o Upload e Download de legendas para filmes, séries etc...</p>
-<p>‎Utilizando o framework <b>Spring Boot</b>, a aplicação será construída com o objetivo de oferecer ao nosso cliente (<b>Libreflix</b>) uma solução intuitiva e funcional para um repositório online de legendas.</p>
+<p>‎Utilizando os frameworks <b>Spring</b> e <b>React</b>, a aplicação será construída com o objetivo de oferecer ao nosso cliente (<b>Libreflix</b>) uma solução intuitiva e funcional para um repositório online de legendas.</p>
 
 ---
 
@@ -15,7 +15,7 @@
 
 ## 🔨 Ferramentas
 <div style="display: flex; align-items: center;">
-  <a href="#">
+  <a href="https://libresubtitles.atlassian.net/jira/software/projects/SCRUM/boards/1/">
   <img src="https://img.shields.io/badge/Jira-37abc8?style=for-the-badge&logo=Jira&logoColor=white"/>
   </a>
     <img src="https://img.shields.io/badge/figma-fff?style=for-the-badge&logo=figma&logoColor=37abc8"/>
