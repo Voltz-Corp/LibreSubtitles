@@ -33,5 +33,6 @@
 
 ### Diagrama de classes
 <p align="center" width="300">
-
+  <img src="https://github.com/user-attachments/assets/9230c07b-86c9-4992-95f6-11e8deed7437"/>
 </p>
+
