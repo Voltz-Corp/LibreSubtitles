@@ -30,3 +30,8 @@
 
 ---
 # Status Report 1
+
+### Diagrama de classes
+<p align="center" width="300">
+  <img src="./SR1/static/diagrama.svg"/>
+</p>
