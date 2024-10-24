@@ -33,5 +33,9 @@
 
 ### Diagrama de classes
 <p align="center" width="300">
-  <img src="./SR1/static/diagrama.svg"/>
+ 
+  ![image](https://github.com/user-attachments/assets/ba1f0431-fd4e-4c49-a7a1-f6dc0ea6508a)
 </p>
+
+
+
