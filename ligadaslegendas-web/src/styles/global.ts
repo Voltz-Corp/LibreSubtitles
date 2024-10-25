@@ -6,4 +6,18 @@ export const GlobalStyles = createGlobalStyle`
     margin: 0;
     box-sizing: border-box;
   }
+
+  html {
+    font-size: 62.5%;
+    font-family: 'Source Sans 3 Variable', sans-serif;
+  }
+
+  html, body, #__next {
+    height: 100%;
+  }
+
+  a {
+    text-decoration: none;
+    cursor: pointer;
+  }
 `;

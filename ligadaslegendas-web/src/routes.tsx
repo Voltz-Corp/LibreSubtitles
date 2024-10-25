@@ -1,9 +1,24 @@
 import { createBrowserRouter } from 'react-router-dom';
-import { Auth } from './pages/auth';
+import { LandingPage } from './pages/landing_page';
+import { Login } from './pages/login';
+import { Register } from './pages/register';
+import { SubtitleUpload } from './pages/subtitle_upload';
 
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <Auth />,
+    element: <LandingPage />,
+  },
+  {
+    path: '/login',
+    element: <Login />,
+  },
+  {
+    path: '/cadastro',
+    element: <Register />,
+  },
+  {
+    path: '/upload',
+    element: <SubtitleUpload />,
   },
 ]);
