@@ -26,6 +26,6 @@ export const HeadingTwo = styled.h2`
 
 export const MovieSliderContent = styled.section`
   ${({ theme }) => css`
-    margin-top: ${theme.spacings.xlarge};
+    margin-top: ${theme.spacings.xxxlarge};
   `}
 `;

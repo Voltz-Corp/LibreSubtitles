@@ -15,8 +15,9 @@ export function Slider({ children }: SliderProps) {
     initial: 0,
     loop: true,
     slides: {
-      perView: 3,
-      spacing: 8,
+      origin: 'center',
+      perView: 6,
+      spacing: 12,
     },
     breakpoints: {
       '(max-width: 970px)': {

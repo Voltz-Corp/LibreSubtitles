@@ -25,4 +25,12 @@ export const TmdbService = {
       return err.toJSON();
     }
   },
+  getMovie: async function (id: string | undefined) {
+    try {
+      const response = await tmdbApi.get(`/movie/${id}?language=pt-BR`);
+      return response.data;
+    } catch (err: any) {
+      return err.toJSON();
+    }
+  },
 };

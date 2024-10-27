@@ -4,39 +4,13 @@ export const Wrapper = styled.section`
   position: relative;
 `;
 
-export const Slider = styled.div``;
-
-export const SlideNavigation = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 72px;
-
-  /* .dots {
-    display: flex;
-    padding: 10px 0;
-    justify-content: center;
-  }
-
-  .dot {
-    border: none;
-    width: 10px;
-    height: 10px;
-    background: ${({ theme }) => theme.colors.lightGray};
-    border-radius: 50%;
-    margin: 0 5px;
-    padding: 5px;
+export const Slider = styled.div`
+  .keen-slider__slide {
     cursor: pointer;
   }
-
-  .dot:focus {
-    outline: none;
-  }
-
-  .dot.active {
-    background: ${({ theme }) => theme.colors.primary};
-  } */
 `;
+
+export const SlideNavigation = styled.div``;
 
 const ArrowButton = styled.button`
   ${({ theme }) => css`
@@ -46,9 +20,9 @@ const ArrowButton = styled.button`
     border: none;
 
     position: absolute;
-    top: 37%;
+    top: 50%;
     transform: translateY(-50%);
-    height: 73%;
+    height: 100%;
     width: 5rem;
 
     transition: all 0.3s;
@@ -60,7 +34,7 @@ const ArrowButton = styled.button`
     }
 
     &:hover {
-      background-color: rgba(0, 0, 0, 0.4);
+      background-color: rgba(0, 0, 0, 0.5);
 
       svg {
         visibility: visible;

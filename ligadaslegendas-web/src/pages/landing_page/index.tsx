@@ -7,6 +7,7 @@ import { Slider } from '../../components/Slider';
 import { MovieCard } from '../../components/MovieCard';
 import { TmdbService } from '../../services/http/TmdbService';
 import { Search } from '../../components/Search';
+import { useNavigate } from 'react-router-dom';
 
 export type MovieProps = {
   id: number;
@@ -14,9 +15,13 @@ export type MovieProps = {
   backdrop_path: string;
   title: string;
   overview: string;
+  vote_average: number;
+  vote_count: number;
 };
 
 export function LandingPage() {
+  const navigate = useNavigate();
+
   const { data: trendingToday } = useQuery({
     queryKey: ['trending', 'day'],
     queryFn: () => TmdbService.getTrendingToday(),
@@ -32,7 +37,9 @@ export function LandingPage() {
     queryFn: () => TmdbService.getTopRatedInternationally(),
   });
 
-  console.log(trendingToday);
+  function handleRedirectToMoviePage(id: number) {
+    navigate(`/filme/${id}`);
+  }
 
   return (
     <>
@@ -49,7 +56,11 @@ export function LandingPage() {
           {trendingToday && (
             <Slider>
               {trendingToday.map((movie: MovieProps) => (
-                <MovieCard movie={movie} className="keen-slider__slide" />
+                <MovieCard
+                  movie={movie}
+                  className="keen-slider__slide"
+                  onClick={() => handleRedirectToMoviePage(movie.id)}
+                />
               ))}
             </Slider>
           )}

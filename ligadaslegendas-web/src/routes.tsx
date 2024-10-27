@@ -3,6 +3,7 @@ import { LandingPage } from './pages/landing_page';
 import { Login } from './pages/login';
 import { Register } from './pages/register';
 import { SubtitleUpload } from './pages/subtitle_upload';
+import { Movie } from './pages/movie';
 
 export const router = createBrowserRouter([
   {
@@ -20,5 +21,9 @@ export const router = createBrowserRouter([
   {
     path: '/upload',
     element: <SubtitleUpload />,
+  },
+  {
+    path: '/filme/:id',
+    element: <Movie />,
   },
 ]);
