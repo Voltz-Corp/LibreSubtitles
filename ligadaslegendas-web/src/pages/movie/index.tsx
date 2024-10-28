@@ -66,7 +66,7 @@ export function Movie() {
             <p>Filme</p>
             <S.InfoHeader>
               <h2>{movie?.title}</h2> <FiStar />{' '}
-              <span>{movie?.vote_average} / 10 IMDb</span>
+              <span>{movie?.vote_average} / 10 TMDb</span>
             </S.InfoHeader>
             <div>
               <p>
