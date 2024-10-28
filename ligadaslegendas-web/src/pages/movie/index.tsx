@@ -6,10 +6,23 @@ import { HeaderNavigation } from '../../components/HeaderNavigation';
 import { Helmet } from 'react-helmet-async';
 import { MovieProps } from '../landing_page';
 import { FiStar } from 'react-icons/fi';
+import { Button } from '../../components/Button';
+import { toast } from 'sonner';
 
 type Genre = {
   id: number;
   name: string;
+};
+
+type CastAndCrew = {
+  id: number;
+  known_for_department: string;
+  name: string;
+};
+
+type Credits = {
+  cast: CastAndCrew[];
+  crew: CastAndCrew[];
 };
 
 type MovieDetailedProps = {
@@ -17,6 +30,7 @@ type MovieDetailedProps = {
   runtime: number;
   genres: Genre[];
   release_date: string;
+  credits: Credits;
 } & MovieProps;
 
 export function Movie() {
@@ -27,7 +41,20 @@ export function Movie() {
     queryFn: () => TmdbService.getMovie(id),
   });
 
-  console.log(movie);
+  const directorsSet = new Set();
+
+  const directors = movie?.credits.crew
+    .filter((member) => member.known_for_department === 'Directing')
+    .filter((member) => {
+      const duplicate = directorsSet.has(member.id);
+      directorsSet.add(member.id);
+      return !duplicate;
+    })
+    .map((member) => `${member.name}, `);
+
+  function handleAskForSubtitle() {
+    toast.success('Pedido de legenda enviado!');
+  }
 
   return (
     <>
@@ -45,9 +72,9 @@ export function Movie() {
               <p>
                 Ano de lançamento: {movie?.release_date} | Duração:{' '}
                 {movie?.runtime}min | Gênero:{' '}
-                {movie?.genres.map((movie) => `${movie.name} `)}
+                {movie?.genres.map((movie) => `${movie.name}, `)}
               </p>
-              <p>Direção: XXXX | Elenco: XXXX</p>
+              <p>Direção: {directors}</p>
               <p>Título original: {movie?.original_title}</p>
             </div>
           </S.MovieInfo>
@@ -55,6 +82,30 @@ export function Movie() {
             src={`https://image.tmdb.org/t/p/w500/${movie?.backdrop_path}`}
           />
         </S.MovieContent>
+
+        <S.TableContainer>
+          <div>
+            <h3>Legendas</h3>
+
+            <Button size="sm" onClick={handleAskForSubtitle}>
+              Pedir legenda
+            </Button>
+          </div>
+
+          <S.SubtitleTable>
+            <thead>
+              <tr>
+                <th>Ano</th>
+                <th>Nome </th>
+                <th>Legendador</th>
+                <th>Avaliação</th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </S.SubtitleTable>
+        </S.TableContainer>
       </S.Wrapper>
     </>
   );

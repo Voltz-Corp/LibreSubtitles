@@ -1,5 +1,4 @@
-import { InputHTMLAttributes } from 'react';
-
+import React, { forwardRef, InputHTMLAttributes } from 'react';
 import * as S from './styles';
 
 export type TextFieldProps = {
@@ -12,30 +11,43 @@ export type TextFieldProps = {
   error?: string;
 } & InputHTMLAttributes<HTMLInputElement>;
 
-export function Input({
-  icon,
-  iconPosition = 'left',
-  label,
-  name,
-  error,
-  disabled = false,
-  ...props
-}: TextFieldProps) {
-  return (
-    <S.Wrapper disabled={disabled} error={!!error}>
-      {!!label && <S.Label htmlFor={name}>{label}</S.Label>}
-      <S.InputWrapper>
-        {!!icon && <S.Icon iconPosition={iconPosition}>{icon}</S.Icon>}
-        <S.Input
-          type="text"
-          iconPosition={iconPosition}
-          disabled={disabled}
-          name={name}
-          {...(label ? { id: name } : {})}
-          {...props}
-        />
-      </S.InputWrapper>
-      {!!error && <S.Error>{error}</S.Error>}
-    </S.Wrapper>
-  );
-}
+export const Input = forwardRef<HTMLInputElement, TextFieldProps>(
+  (
+    {
+      icon,
+      iconPosition = 'left',
+      label,
+      name,
+      error,
+      disabled = false,
+      onInputChange,
+      ...props
+    },
+    ref,
+  ) => {
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      if (onInputChange) onInputChange(event.target.value);
+      if (props.onChange) props.onChange(event);
+    };
+
+    return (
+      <S.Wrapper disabled={disabled} error={!!error}>
+        {!!label && <S.Label htmlFor={name}>{label}</S.Label>}
+        <S.InputWrapper>
+          {!!icon && <S.Icon iconPosition={iconPosition}>{icon}</S.Icon>}
+          <S.Input
+            type="text"
+            iconPosition={iconPosition}
+            disabled={disabled}
+            name={name}
+            ref={ref}
+            onChange={handleChange}
+            {...(label ? { id: name } : {})}
+            {...props}
+          />
+        </S.InputWrapper>
+        {!!error && <S.Error>{error}</S.Error>}
+      </S.Wrapper>
+    );
+  },
+);

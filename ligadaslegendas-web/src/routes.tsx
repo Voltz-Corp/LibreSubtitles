@@ -4,6 +4,7 @@ import { Login } from './pages/login';
 import { Register } from './pages/register';
 import { SubtitleUpload } from './pages/subtitle_upload';
 import { Movie } from './pages/movie';
+import { Synchronize } from './pages/synchronize';
 
 export const router = createBrowserRouter([
   {
@@ -25,5 +26,9 @@ export const router = createBrowserRouter([
   {
     path: '/filme/:id',
     element: <Movie />,
+  },
+  {
+    path: '/sincronizar',
+    element: <Synchronize />,
   },
 ]);

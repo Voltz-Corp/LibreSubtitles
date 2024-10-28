@@ -10,6 +10,7 @@ export const Wrapper = styled.header`
 
     img {
       width: 30rem;
+      cursor: pointer;
     }
   `}
 `;

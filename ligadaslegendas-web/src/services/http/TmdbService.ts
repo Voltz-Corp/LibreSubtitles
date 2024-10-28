@@ -27,7 +27,9 @@ export const TmdbService = {
   },
   getMovie: async function (id: string | undefined) {
     try {
-      const response = await tmdbApi.get(`/movie/${id}?language=pt-BR`);
+      const response = await tmdbApi.get(
+        `/movie/${id}?language=pt-BR&append_to_response=credits`,
+      );
       return response.data;
     } catch (err: any) {
       return err.toJSON();

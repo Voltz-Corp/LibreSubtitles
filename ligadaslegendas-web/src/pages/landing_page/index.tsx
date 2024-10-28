@@ -71,7 +71,11 @@ export function LandingPage() {
           {popularInBrazil && (
             <Slider>
               {popularInBrazil.map((movie: MovieProps) => (
-                <MovieCard movie={movie} className="keen-slider__slide" />
+                <MovieCard
+                  movie={movie}
+                  className="keen-slider__slide"
+                  onClick={() => handleRedirectToMoviePage(movie.id)}
+                />
               ))}
             </Slider>
           )}
@@ -82,7 +86,11 @@ export function LandingPage() {
           {topRatedInternationally && (
             <Slider>
               {topRatedInternationally.map((movie: MovieProps) => (
-                <MovieCard movie={movie} className="keen-slider__slide" />
+                <MovieCard
+                  movie={movie}
+                  className="keen-slider__slide"
+                  onClick={() => handleRedirectToMoviePage(movie.id)}
+                />
               ))}
             </Slider>
           )}

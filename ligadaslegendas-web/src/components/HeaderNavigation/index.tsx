@@ -3,15 +3,23 @@ import { Button } from '../Button';
 import * as S from './styles';
 
 export function HeaderNavigation() {
-  const navigation = useNavigate();
+  const navigate = useNavigate();
 
   function handleGoToLogin() {
-    navigation('/login');
+    navigate('/login');
+  }
+
+  function handleGoToLandingPage() {
+    navigate('/');
   }
 
   return (
     <S.Wrapper>
-      <img src="/fullLogo.png" alt="Logo Libre Subtitles" />
+      <img
+        src="/fullLogo.png"
+        alt="Logo Libre Subtitles"
+        onClick={handleGoToLandingPage}
+      />
       <S.Navigation>
         <ul>
           <li>
@@ -24,7 +32,7 @@ export function HeaderNavigation() {
             <a href="/upload">Enviar Legendas</a>
           </li>
           <li>
-            <a href="#">Sincronizar Legendas</a>
+            <a href="/sincronizar">Sincronizar Legendas</a>
           </li>
         </ul>
         <Button onClick={handleGoToLogin}>Entrar</Button>

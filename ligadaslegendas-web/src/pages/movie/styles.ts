@@ -54,3 +54,58 @@ export const InfoHeader = styled.div`
 export const MoviePoster = styled.img`
   border-radius: ${({ theme }) => theme.border.radius.medium};
 `;
+
+export const TableContainer = styled.section`
+  ${({ theme }) => css`
+    background-color: ${theme.colors.white};
+    border-radius: ${theme.border.radius.xxsmall};
+    width: 100%;
+    margin-top: ${theme.spacings.medium};
+
+    > div {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: calc(${theme.spacings.small} - 0.4rem) ${theme.spacings.small};
+    }
+
+    h3 {
+      color: ${theme.colors.primary};
+      font-size: ${theme.font.sizes.large};
+    }
+  `}
+`;
+
+export const SubtitleTable = styled.table`
+  ${({ theme }) => css`
+    border-collapse: collapse;
+    text-align: left;
+
+    width: 100%;
+
+    tr {
+      border-bottom: 1px solid ${theme.colors.lightGray};
+    }
+
+    thead tr {
+      border-top: 1px solid ${theme.colors.lightGray};
+      border-bottom: 1px solid ${theme.colors.lightGray};
+    }
+
+    thead th {
+      color: ${theme.colors.primary};
+      font-weight: 500;
+      padding: ${theme.spacings.xsmall} ${theme.spacings.small};
+      font-size: ${theme.font.sizes.small};
+    }
+
+    tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    tbody td {
+      padding: ${theme.spacings.xsmall} ${theme.spacings.small};
+      color: ${theme.colors.primary};
+    }
+  `}
+`;

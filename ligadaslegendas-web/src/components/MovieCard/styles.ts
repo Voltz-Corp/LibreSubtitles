@@ -7,7 +7,7 @@ export const Wrapper = styled.div<MovieCardProps>`
     background-size: cover;
     background-position: center;
     width: 100%;
-    height: 50rem;
+    height: 28rem;
     border-radius: ${({ theme }) => theme.border.radius.medium};
   `}
 `;
