@@ -17,8 +17,8 @@ export const Input = forwardRef<HTMLInputElement, TextFieldProps>(
       icon,
       iconPosition = 'left',
       label,
-      name,
       error,
+      name,
       disabled = false,
       onInputChange,
       ...props
@@ -39,9 +39,9 @@ export const Input = forwardRef<HTMLInputElement, TextFieldProps>(
             type="text"
             iconPosition={iconPosition}
             disabled={disabled}
-            name={name}
             ref={ref}
             onChange={handleChange}
+            name={name}
             {...(label ? { id: name } : {})}
             {...props}
           />

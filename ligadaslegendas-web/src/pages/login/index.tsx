@@ -5,12 +5,39 @@ import { Input } from '../../components/Input';
 import * as S from './styles';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import { useMutation } from '@tanstack/react-query';
+import { useAuth } from '../../hooks/useAuth';
+import { useForm } from 'react-hook-form';
+
+type Login = {
+  email: string;
+  password: string;
+};
 
 export function Login() {
   const navigate = useNavigate();
+  const { login } = useAuth();
 
-  function handleLogin() {
-    toast.success('Usuário logado com sucesso!');
+  const { register, handleSubmit } = useForm({
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  });
+
+  const { mutateAsync: authenticate } = useMutation({
+    mutationFn: login,
+  });
+
+  async function handleLogin({ email, password }: Login) {
+    try {
+      await authenticate({ email, password });
+
+      toast.success('Usuário logado com sucesso!');
+    } catch (error) {
+      console.error(error);
+      toast.error('Credenciais inválidas');
+    }
   }
 
   function handleRedirectToRegister() {
@@ -22,12 +49,16 @@ export function Login() {
       <Helmet title="Login" />
       <HeaderNavigation />
       <S.Wrapper>
-        <S.Login>
+        <S.Login onSubmit={handleSubmit(handleLogin)}>
           <S.Heading>Entre na sua conta</S.Heading>
-          <Input name="email" placeholder="Email" type="text" />
-          <Input name="password" placeholder="Senha" type="password" />
+          <Input placeholder="Email" type="text" {...register('email')} />
+          <Input
+            placeholder="Senha"
+            type="password"
+            {...register('password')}
+          />
           <S.ForgotPassword>Esqueceu sua senha?</S.ForgotPassword>
-          <Button fullWidth size="lg" type="button" onClick={handleLogin}>
+          <Button fullWidth size="lg">
             Entrar
           </Button>
         </S.Login>
