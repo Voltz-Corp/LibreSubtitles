@@ -12,7 +12,6 @@ export function HeaderNavigation() {
   function handleGoToLandingPage() {
     navigate('/');
   }
-
   return (
     <S.Wrapper>
       <img
@@ -35,6 +34,7 @@ export function HeaderNavigation() {
             <a href="/sincronizar">Sincronizar Legendas</a>
           </li>
         </ul>
+
         <Button onClick={handleGoToLogin}>Entrar</Button>
       </S.Navigation>
     </S.Wrapper>

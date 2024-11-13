@@ -1,6 +1,7 @@
-import { createContext, ReactNode } from 'react';
+import { createContext, ReactNode, useState } from 'react';
 import { api } from '../lib/axios';
 import { useCookies } from 'react-cookie';
+import { User } from '../types';
 
 interface AuthProviderProps {
   children: ReactNode;
@@ -13,12 +14,14 @@ type Login = {
 
 interface AuthContextData {
   login: (data: Login) => Promise<void>;
+  user: Pick<User, 'name'> | undefined;
 }
 
 export const AuthContext = createContext({} as AuthContextData);
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [, setCookie] = useCookies(['libretoken']);
+  const [user, setUser] = useState<Pick<User, 'name'>>();
 
   async function login({ email, password }: Login) {
     const response = await api.post('auth/login', {
@@ -26,8 +29,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
       password,
     });
 
-    const { token } = response.data;
+    const { token, name } = response.data;
 
+    setUser(name);
     api.defaults.headers.common.authorization = `Bearer ${token}`;
 
     setCookie('libretoken', token, {
@@ -36,6 +40,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }
 
   return (
-    <AuthContext.Provider value={{ login }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ login, user }}>
+      {children}
+    </AuthContext.Provider>
   );
 }

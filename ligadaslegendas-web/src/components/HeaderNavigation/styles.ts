@@ -36,3 +36,18 @@ export const Navigation = styled.nav`
     }
   `}
 `;
+
+export const Profile = styled.div`
+  ${({ theme }) => css`
+    width: 3.2rem;
+    height: 3.2rem;
+    border-radius: 50%;
+    background-color: ${theme.colors.primary};
+    color: ${theme.colors.white};
+    font-weight: ${theme.font.bold};
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  `}
+`;

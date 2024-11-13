@@ -96,7 +96,7 @@ export const SubtitleTable = styled.table`
       color: ${theme.colors.primary};
       font-weight: 500;
       padding: ${theme.spacings.xsmall} ${theme.spacings.small};
-      font-size: ${theme.font.sizes.small};
+      font-size: ${theme.font.sizes.medium};
     }
 
     tbody tr:last-child {
@@ -106,6 +106,7 @@ export const SubtitleTable = styled.table`
     tbody td {
       padding: ${theme.spacings.xsmall} ${theme.spacings.small};
       color: ${theme.colors.primary};
+      font-size: ${theme.font.sizes.small};
     }
   `}
 `;

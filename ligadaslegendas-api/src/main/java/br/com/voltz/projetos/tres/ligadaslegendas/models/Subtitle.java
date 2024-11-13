@@ -1,6 +1,6 @@
 package br.com.voltz.projetos.tres.ligadaslegendas.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
@@ -9,27 +9,34 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name="users")
+@Table(name="subtitles")
 @Data
-public class User {
+public class Subtitle {
     @Id
     @GeneratedValue(generator = "UUID")
     private UUID id;
 
-    private String name;
+    private String fileName;
 
-    @Column(unique = true)
-    private String email;
+    @Lob
+    private byte[] file;
 
-    @JsonIgnore
-    private String password;
+    private String language;
 
-    private Boolean isSubtitler = false;
-    private long points;
+    private boolean isClosedCaptions;
+
+    private double rating;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
 
     @CreationTimestamp
     private LocalDateTime updatedAt;
+
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private User user;
+
+    @Column(nullable = true, unique = true)
+    private int tmdbId;
 }

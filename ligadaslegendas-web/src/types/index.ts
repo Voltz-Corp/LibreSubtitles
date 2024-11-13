@@ -2,7 +2,7 @@ export type User = {
   id: string;
   name: string;
   email: string;
-  is_subtitler: boolean;
+  isSubtitler: boolean;
   points: number;
   created_at: Date;
   updated_at: Date;
@@ -40,13 +40,14 @@ export type Movie = {
 
 export type Subtitle = {
   id: string;
-  file_name: string;
+  fileName: string;
   file: File;
   language: string;
-  is_closed_captions: boolean;
+  isClosedCaptions: boolean;
   rating: number;
   created_at: Date;
   updated_at: Date;
+  user: User;
 };
 
 export type Rating = {
