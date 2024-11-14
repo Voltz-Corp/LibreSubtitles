@@ -20,7 +20,7 @@ export const SubtitleService = {
     return data;
   },
   getFileBySubtitleId: async (id: string) => {
-    const { data } = await api.get(`subtitle/${id}`);
-    return data;
+    const response = await api.get(`subtitle/${id}`);
+    return response;
   },
 };

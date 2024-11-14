@@ -49,8 +49,8 @@ public class SubtitleService {
         subtitleRepository.save(subtitle);
     }
 
-    public Optional<Subtitle> getSubtitleById(UUID id) {
-        return subtitleRepository.findById(id);
+    public Subtitle getSubtitleById(UUID id) {
+        return subtitleRepository.findById(id).orElse(null);
     }
 
     public List<GetSubtitleByMovieIdDTO> getSubtitleByTmdbId(int id) {

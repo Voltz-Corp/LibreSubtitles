@@ -67,6 +67,12 @@ export const TableContainer = styled.section`
       align-items: center;
       justify-content: space-between;
       padding: calc(${theme.spacings.small} - 0.4rem) ${theme.spacings.small};
+
+      div {
+        display: flex;
+        align-items: center;
+        gap: ${theme.spacings.small};
+      }
     }
 
     h3 {
@@ -107,6 +113,21 @@ export const SubtitleTable = styled.table`
       padding: ${theme.spacings.xsmall} ${theme.spacings.small};
       color: ${theme.colors.primary};
       font-size: ${theme.font.sizes.small};
+    }
+
+    tbody td button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      background: none;
+      border: none;
+      cursor: pointer;
+
+      svg {
+        font-size: ${theme.font.sizes.xlarge};
+        color: ${theme.colors.primary};
+      }
     }
   `}
 `;

@@ -49,22 +49,6 @@ export function Movie() {
     queryFn: () => SubtitleService.getSubtitlesByMovieId(id),
   });
 
-  const { data: subtitleFile } = useQuery({
-    queryKey: ['file', id],
-    queryFn: () =>
-      SubtitleService.getFileBySubtitleId(
-        '107f6d49-061a-4027-99c1-f47f6dce319a',
-      ),
-  });
-
-  function exportUserInfo() {
-    const blob = new Blob([subtitleFile], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.download = 'user-info.srt';
-    link.href = url;
-    link.click();
-  }
   const directorsSet = new Set();
 
   const directors = movie?.credits.crew
@@ -84,7 +68,20 @@ export function Movie() {
     navigate(`/upload?movieId=${id}`);
   }
 
-  console.log(subtitles);
+  async function handleDownloadSubtitle(subtitle: Subtitle) {
+    const { data } = await SubtitleService.getFileBySubtitleId(subtitle.id);
+
+    const subtitleBlob = new Blob([data]);
+    const subtitleUrl = URL.createObjectURL(subtitleBlob);
+
+    const link = document.createElement('a');
+
+    link.href = subtitleUrl;
+    link.setAttribute('download', 'legenda.srt'); // substituir pelo nome do arquivo
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  }
 
   return (
     <>
@@ -144,9 +141,9 @@ export function Movie() {
                   <td>{subtitle.user.name}</td>
                   <td>{subtitle.rating}</td>
                   <td>
-                    <Button>
+                    <button onClick={() => handleDownloadSubtitle(subtitle)}>
                       <FiDownload />
-                    </Button>
+                    </button>
                   </td>
                 </tr>
               ))}

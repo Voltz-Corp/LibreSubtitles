@@ -4,7 +4,9 @@ import br.com.voltz.projetos.tres.ligadaslegendas.dto.subtitle.GetSubtitleByMovi
 import br.com.voltz.projetos.tres.ligadaslegendas.dto.subtitle.SubtitleUploadDTO;
 import br.com.voltz.projetos.tres.ligadaslegendas.models.Subtitle;
 import br.com.voltz.projetos.tres.ligadaslegendas.services.SubtitleService;
+import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -12,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -37,17 +41,22 @@ public class SubtitleController {
         }
     }
 
-//    @GetMapping("/{id}")
-//    public ResponseEntity<byte[]> downloadFile(@PathVariable String id) throws IOException {
-//        Optional<Subtitle> subtitle = subtitleService.getSubtitleById(UUID.fromString(id));
-//        byte[] file = subtitle.get().getFile();
-//
-//        return ResponseEntity.ok()
-//                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + subtitle.get().getFileName())
-//                .header(HttpHeaders.CONTENT_TYPE, "application/octet-stream")
-//                .header(HttpHeaders.CONTENT_LENGTH, String.valueOf(file.length))
-//                .body(file);
-//    }
+    @GetMapping("/{id}")
+    public ResponseEntity<FileSystemResource> downloadFile(@PathVariable String id) throws IOException {
+        Subtitle subtitle = subtitleService.getSubtitleById(UUID.fromString(id));
+
+        if (subtitle == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        Path filePath = Paths.get(subtitle.getFilePath());
+        FileSystemResource fileResource = new FileSystemResource(filePath.toFile());
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + subtitle.getFileName())
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM_VALUE)
+                .body(fileResource);
+    }
 
     @GetMapping("/")
     public List<Subtitle> getSubtitlesByMovieId() {
