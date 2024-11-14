@@ -32,21 +32,22 @@ public class SubtitleController {
             subtitleService.saveSubtitle(body);
             return ResponseEntity.ok("Arquivo salvo com sucesso.");
         } catch (IOException e) {
+            System.out.println(e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao salvar o arquivo.");
         }
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<byte[]> downloadFile(@PathVariable String id) throws IOException {
-        Optional<Subtitle> subtitle = subtitleService.getSubtitleById(UUID.fromString(id));
-        byte[] file = subtitle.get().getFile();
-
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + subtitle.get().getFileName())
-                .header(HttpHeaders.CONTENT_TYPE, "application/octet-stream")
-                .header(HttpHeaders.CONTENT_LENGTH, String.valueOf(file.length))
-                .body(file);
-    }
+//    @GetMapping("/{id}")
+//    public ResponseEntity<byte[]> downloadFile(@PathVariable String id) throws IOException {
+//        Optional<Subtitle> subtitle = subtitleService.getSubtitleById(UUID.fromString(id));
+//        byte[] file = subtitle.get().getFile();
+//
+//        return ResponseEntity.ok()
+//                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + subtitle.get().getFileName())
+//                .header(HttpHeaders.CONTENT_TYPE, "application/octet-stream")
+//                .header(HttpHeaders.CONTENT_LENGTH, String.valueOf(file.length))
+//                .body(file);
+//    }
 
     @GetMapping("/")
     public List<Subtitle> getSubtitlesByMovieId() {

@@ -65,7 +65,6 @@ export function Movie() {
     link.href = url;
     link.click();
   }
-  exportUserInfo();
   const directorsSet = new Set();
 
   const directors = movie?.credits.crew

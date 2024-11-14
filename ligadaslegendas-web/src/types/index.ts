@@ -41,12 +41,12 @@ export type Movie = {
 export type Subtitle = {
   id: string;
   fileName: string;
-  file: File;
+  filePath: string;
   language: string;
   isClosedCaptions: boolean;
   rating: number;
-  created_at: Date;
-  updated_at: Date;
+  createdAt: Date;
+  updatedAt: Date;
   user: User;
 };
 

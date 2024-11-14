@@ -18,8 +18,7 @@ public class Subtitle {
 
     private String fileName;
 
-    @Lob
-    private byte[] file;
+    private String filePath;
 
     private String language;
 
