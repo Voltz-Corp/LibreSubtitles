@@ -70,15 +70,17 @@ export function Movie() {
   }
 
   async function handleDownloadSubtitle(subtitle: Subtitle) {
-    const { data } = await SubtitleService.getFileBySubtitleId(subtitle.id);
+    const { data: file } = await SubtitleService.getFileBySubtitleId(
+      subtitle.id,
+    );
 
-    const subtitleBlob = new Blob([data]);
+    const subtitleBlob = new Blob([file]);
     const subtitleUrl = URL.createObjectURL(subtitleBlob);
 
     const link = document.createElement('a');
 
     link.href = subtitleUrl;
-    link.setAttribute('download', 'legenda.srt'); // substituir pelo nome do arquivo
+    link.setAttribute('download', subtitle.fileName);
     document.body.appendChild(link);
     link.click();
     link.remove();

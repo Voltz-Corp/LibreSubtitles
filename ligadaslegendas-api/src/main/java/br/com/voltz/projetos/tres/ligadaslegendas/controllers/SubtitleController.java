@@ -33,7 +33,7 @@ public class SubtitleController {
             if (body.file().isEmpty() || !body.file().getOriginalFilename().endsWith(".srt")) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Arquivo inválido. Envie um arquivo .srt.");
             }
-            subtitleService.saveSubtitle(body);
+            subtitleService.createSubtitle(body);
             return ResponseEntity.ok("Arquivo salvo com sucesso.");
         } catch (IOException e) {
             System.out.println(e.getMessage());

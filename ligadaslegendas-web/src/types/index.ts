@@ -54,4 +54,6 @@ export type Subtitle = {
 export type Rating = {
   id: string;
   rating: number;
+  user: User;
+  subtitle: Subtitle;
 };

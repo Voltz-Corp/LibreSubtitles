@@ -16,6 +16,8 @@ import { FiX } from 'react-icons/fi';
 import { useDebounce } from '../../hooks/useDebounce';
 import { TmdbService } from '../../services/http/TmdbService';
 import { MovieProps } from '../landing_page';
+import { languages } from '../../constants/language';
+import { handleFormatFileSize } from '../../utils/formatFileSize';
 
 export function SubtitleUpload() {
   const [searchedMovie, setSearchedMovie] = useState('');
@@ -30,117 +32,6 @@ export function SubtitleUpload() {
   function handleFileInputClick() {
     fileInputRef.current?.click();
   }
-
-  const languages = [
-    { label: 'Selecionar', value: '' },
-    { label: 'Portuguese (BR)', value: 'pob' },
-    { label: 'Português (Portugal)', value: 'por' },
-    { label: 'Abkhazian', value: 'abk' },
-    { label: 'Afrikaans', value: 'afr' },
-    { label: 'Albanian', value: 'alb' },
-    { label: 'Amharic', value: 'amh' },
-    { label: 'Arabic', value: 'ara' },
-    { label: 'Aragonese', value: 'arg' },
-    { label: 'Armenian', value: 'arm' },
-    { label: 'Assamese', value: 'asm' },
-    { label: 'Asturian', value: 'ast' },
-    { label: 'Azerbaijani', value: 'aze' },
-    { label: 'Basque', value: 'baq' },
-    { label: 'Belarusian', value: 'bel' },
-    { label: 'Bengali', value: 'ben' },
-    { label: 'Bosnian', value: 'bos' },
-    { label: 'Breton', value: 'bre' },
-    { label: 'Bulgarian', value: 'bul' },
-    { label: 'Burmese', value: 'bur' },
-    { label: 'Catalan', value: 'cat' },
-    { label: 'Chinese (Cantonese)', value: 'zhc' },
-    { label: 'Chinese (simplified)', value: 'chi' },
-    { label: 'Chinese (traditional)', value: 'zht' },
-    { label: 'Chinese bilingual', value: 'zhe' },
-    { label: 'Croatian', value: 'hrv' },
-    { label: 'Czech', value: 'cze' },
-    { label: 'Danish', value: 'dan' },
-    { label: 'Dari', value: 'prs' },
-    { label: 'Dutch', value: 'dut' },
-    { label: 'English', value: 'eng' },
-    { label: 'Esperanto', value: 'epo' },
-    { label: 'Estonian', value: 'est' },
-    { label: 'Extremaduran', value: 'ext' },
-    { label: 'Finnish', value: 'fin' },
-    { label: 'French', value: 'fre' },
-    { label: 'Gaelic', value: 'gla' },
-    { label: 'Galician', value: 'glg' },
-    { label: 'Georgian', value: 'geo' },
-    { label: 'German', value: 'ger' },
-    { label: 'Greek', value: 'ell' },
-    { label: 'Hebrew', value: 'heb' },
-    { label: 'Hindi', value: 'hin' },
-    { label: 'Hungarian', value: 'hun' },
-    { label: 'Icelandic', value: 'ice' },
-    { label: 'Igbo', value: 'ibo' },
-    { label: 'Indonesian', value: 'ind' },
-    { label: 'Interlingua', value: 'ina' },
-    { label: 'Irish', value: 'gle' },
-    { label: 'Italian', value: 'ita' },
-    { label: 'Japanese', value: 'jpn' },
-    { label: 'Kannada', value: 'kan' },
-    { label: 'Kazakh', value: 'kaz' },
-    { label: 'Khmer', value: 'khm' },
-    { label: 'Korean', value: 'kor' },
-    { label: 'Kurdish', value: 'kur' },
-    { label: 'Kyrgyz', value: 'kir' },
-    { label: 'Latvian', value: 'lav' },
-    { label: 'Lithuanian', value: 'lit' },
-    { label: 'Luxembourgish', value: 'ltz' },
-    { label: 'Macedonian', value: 'mac' },
-    { label: 'Malay', value: 'may' },
-    { label: 'Malayalam', value: 'mal' },
-    { label: 'Manipuri', value: 'mni' },
-    { label: 'Marathi', value: 'mar' },
-    { label: 'Mongolian', value: 'mon' },
-    { label: 'Montenegrin', value: 'mne' },
-    { label: 'Navajo', value: 'nav' },
-    { label: 'Nepali', value: 'nep' },
-    { label: 'Northern Sami', value: 'sme' },
-    { label: 'Norwegian', value: 'nor' },
-    { label: 'Occitan', value: 'oci' },
-    { label: 'Odia', value: 'ori' },
-    { label: 'Persian', value: 'per' },
-    { label: 'Polish', value: 'pol' },
-    { label: 'Portuguese (MZ)', value: 'pom' },
-    { label: 'Pushto', value: 'pus' },
-    { label: 'Romanian', value: 'rum' },
-    { label: 'Russian', value: 'rus' },
-    { label: 'Santali', value: 'sat' },
-    { label: 'Serbian', value: 'scc' },
-    { label: 'Sindhi', value: 'snd' },
-    { label: 'Sinhalese', value: 'sin' },
-    { label: 'Slovak', value: 'slo' },
-    { label: 'Slovenian', value: 'slv' },
-    { label: 'Somali', value: 'som' },
-    { label: 'Sorbian languages', value: 'wen' },
-    { label: 'South Azerbaijani', value: 'azb' },
-    { label: 'Spanish', value: 'spa' },
-    { label: 'Spanish (EU)', value: 'spn' },
-    { label: 'Spanish (LA)', value: 'spl' },
-    { label: 'Swahili', value: 'swa' },
-    { label: 'Swedish', value: 'swe' },
-    { label: 'Syriac', value: 'syr' },
-    { label: 'Tagalog', value: 'tgl' },
-    { label: 'Tamil', value: 'tam' },
-    { label: 'Tatar', value: 'tat' },
-    { label: 'Telugu', value: 'tel' },
-    { label: 'Tetum', value: 'tet' },
-    { label: 'Thai', value: 'tha' },
-    { label: 'Toki Pona', value: 'tok' },
-    { label: 'Turkish', value: 'tur' },
-    { label: 'Turkmen', value: 'tuk' },
-    { label: 'Ukrainian', value: 'ukr' },
-    { label: 'Urdu', value: 'urd' },
-    { label: 'Uzbek', value: 'uzb' },
-    { label: 'Vietnamese', value: 'vie' },
-    { label: 'Welsh', value: 'wel' },
-  ];
 
   const { data: movie } = useQuery<MovieProps>({
     queryKey: ['movie', tmdbId],
@@ -184,10 +75,24 @@ export function SubtitleUpload() {
   async function handleUploadSubtitle() {
     const data = getValues();
     const formData = new FormData();
-    if (selectedFile) formData.append('file', selectedFile);
+
+    // Formatação de nome de arquivo
+    const movieNameFormatted = data.movie.label.split(' ').join('.');
+    const movieReleaseDate = movie?.release_date;
+    const subtitleLanguage: string = data.language.value;
+    const subtitleClosedCaptions = data.isClosedCaptions ? 'CC' : '';
+
+    const fileName = `${movieNameFormatted}.${
+      movieReleaseDate?.split('-')[0]
+    }.${subtitleLanguage.toUpperCase()}.${subtitleClosedCaptions}.srt`;
+
+    if (selectedFile) {
+      formData.append('file', selectedFile);
+    }
     formData.append('isClosedCaptions', data.isClosedCaptions);
-    formData.append('language', data.language.label);
+    formData.append('language', data.language.value);
     formData.append('tmdbId', data.movie.value);
+    formData.append('fileName', fileName);
 
     mutate(formData);
   }
@@ -195,16 +100,6 @@ export function SubtitleUpload() {
   function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0] || null;
     setSelectedFile(file);
-  }
-
-  function handleFormatFileSize(bytes: number) {
-    if (bytes === 0) return '0 Bytes';
-
-    const units = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-    const unitIndex = Math.floor(Math.log10(bytes) / 3);
-
-    const size = (bytes / Math.pow(1000, unitIndex)).toFixed(2);
-    return `${size} ${units[unitIndex]}`;
   }
 
   function handleRemoveFile() {

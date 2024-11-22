@@ -2,6 +2,7 @@ package br.com.voltz.projetos.tres.ligadaslegendas.services;
 
 import br.com.voltz.projetos.tres.ligadaslegendas.dto.subtitle.GetSubtitleByMovieIdDTO;
 import br.com.voltz.projetos.tres.ligadaslegendas.dto.subtitle.SubtitleUploadDTO;
+import br.com.voltz.projetos.tres.ligadaslegendas.models.Rating;
 import br.com.voltz.projetos.tres.ligadaslegendas.models.Subtitle;
 import br.com.voltz.projetos.tres.ligadaslegendas.models.User;
 import br.com.voltz.projetos.tres.ligadaslegendas.repositories.SubtitleRepository;
@@ -24,14 +25,11 @@ public class SubtitleService {
 
     @Autowired
     private SubtitleRepository subtitleRepository;
-    private UserRepository userRepository;
-    private TokenService tokenService;
-
 
     @Value("${file.upload-dir}")
     private String uploadDir;
 
-    public void saveSubtitle(SubtitleUploadDTO body) throws IOException {
+    public void createSubtitle(SubtitleUploadDTO body) throws IOException {
         Subtitle subtitle = new Subtitle();
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         subtitle.setUser(user);
@@ -41,13 +39,13 @@ public class SubtitleService {
 
         body.file().transferTo(filePath.toAbsolutePath().toFile());
 
-        subtitle.setFileName(body.file().getOriginalFilename());
+        subtitle.setFileName(body.fileName());
         subtitle.setFilePath(filePath.toString());
         subtitle.setTmdbId(body.tmdbId());
         subtitle.setLanguage(body.language());
         subtitle.setClosedCaptions(body.isClosedCaptions());
 
-        subtitleRepository.save(subtitle);
+        saveSubtitle(subtitle);
     }
 
     public Subtitle getSubtitleById(UUID id) {
@@ -63,15 +61,7 @@ public class SubtitleService {
         return subtitleRepository.findAll();
     }
 
-    public void updateRating(String subtitleId, int newRating) {
-        Subtitle subtitle = getSubtitleById(UUID.fromString(subtitleId));
-        double currentRating = subtitle.getRating();
-        int currentRatingCounter = subtitle.getRatingCounter();
-
-        double newAverage = ((currentRating * currentRatingCounter) + newRating) / (currentRatingCounter + 1);
-
-        subtitle.setRatingCounter(currentRatingCounter + 1);
-        subtitle.setRating(newAverage);
+    public void saveSubtitle(Subtitle subtitle) {
         subtitleRepository.save(subtitle);
     }
 }
