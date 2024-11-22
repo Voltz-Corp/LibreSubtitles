@@ -57,9 +57,7 @@ export function Register() {
 
         <S.SignInContent>
           <p>Já tem uma conta?</p>
-          <Button variant="secondary" onClick={handleRedirectToLogin}>
-            Login
-          </Button>
+          <Button onClick={handleRedirectToLogin}>Login</Button>
         </S.SignInContent>
       </S.Wrapper>
     </>

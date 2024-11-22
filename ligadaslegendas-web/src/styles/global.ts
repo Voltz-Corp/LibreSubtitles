@@ -9,7 +9,7 @@ export const GlobalStyles = createGlobalStyle`
 
   html {
     font-size: 62.5%;
-    font-family: 'Source Sans 3 Variable', sans-serif;
+    font-family: 'Source Sans 3';
   }
 
   html, body, #__next {

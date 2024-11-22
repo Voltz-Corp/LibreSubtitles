@@ -1,4 +1,4 @@
-package br.com.voltz.projetos.tres.ligadaslegendas.services;
+package br.com.voltz.projetos.tres.ligadaslegendas.services.auth;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

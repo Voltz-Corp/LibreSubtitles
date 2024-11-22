@@ -7,7 +7,7 @@ export const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  background-color: ${({ theme }) => theme.colors.secondary};
+  background-color: ${({ theme }) => theme.colors.primary_50};
   padding: ${({ theme }) => theme.spacings.medium} 0;
   height: 56.8rem;
   transform: translateY(25%);

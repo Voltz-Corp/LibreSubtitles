@@ -1,4 +1,4 @@
-package br.com.voltz.projetos.tres.ligadaslegendas.services;
+package br.com.voltz.projetos.tres.ligadaslegendas.services.auth;
 
 import br.com.voltz.projetos.tres.ligadaslegendas.models.User;
 import br.com.voltz.projetos.tres.ligadaslegendas.repositories.UserRepository;

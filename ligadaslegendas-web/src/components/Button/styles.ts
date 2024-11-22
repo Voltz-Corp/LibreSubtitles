@@ -30,7 +30,7 @@ const variantModifiers = {
     background-color: ${theme.colors.primary};
   `,
   secondary: (theme: DefaultTheme) => css`
-    background-color: ${theme.colors.quaternary};
+    background-color: ${theme.colors.secondary};
   `,
 };
 

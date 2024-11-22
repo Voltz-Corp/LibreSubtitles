@@ -1,32 +1,23 @@
 package br.com.voltz.projetos.tres.ligadaslegendas.models;
 
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name="subtitles")
+@Table(name="ratings")
 @Data
-public class Subtitle {
+public class Rating {
     @Id
     @GeneratedValue(generator = "UUID")
     private UUID id;
 
-    private String fileName;
-
-    private String filePath;
-
-    private String language;
-
-    private boolean isClosedCaptions;
-
-    private double rating;
-
-    private int ratingCounter;
+    private int rating;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
@@ -35,9 +26,12 @@ public class Subtitle {
     private LocalDateTime updatedAt;
 
     @ManyToOne
-    @JoinColumn(name="user_id")
-    private User user;
+    @JoinColumn(name="subtitle_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Subtitle subtitle;
 
-    @Column(nullable = true, unique = true)
-    private int tmdbId;
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private User user;
 }

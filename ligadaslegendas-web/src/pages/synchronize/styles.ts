@@ -38,7 +38,7 @@ export const UploadForm = styled.form`
     }
 
     &:hover {
-      background-color: ${theme.colors.secondary};
+      background-color: ${theme.colors.primary_50};
     }
   `}
 `;

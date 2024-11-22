@@ -45,6 +45,7 @@ export type Subtitle = {
   language: string;
   isClosedCaptions: boolean;
   rating: number;
+  ratingCounter: number;
   createdAt: Date;
   updatedAt: Date;
   user: User;

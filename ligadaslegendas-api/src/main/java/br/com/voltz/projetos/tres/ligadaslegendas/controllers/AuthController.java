@@ -1,11 +1,11 @@
 package br.com.voltz.projetos.tres.ligadaslegendas.controllers;
 
-import br.com.voltz.projetos.tres.ligadaslegendas.dto.LoginRequestDTO;
-import br.com.voltz.projetos.tres.ligadaslegendas.dto.RegisterRequestDTO;
-import br.com.voltz.projetos.tres.ligadaslegendas.dto.ResponseDTO;
+import br.com.voltz.projetos.tres.ligadaslegendas.dto.auth.LoginRequestDTO;
+import br.com.voltz.projetos.tres.ligadaslegendas.dto.auth.RegisterRequestDTO;
+import br.com.voltz.projetos.tres.ligadaslegendas.dto.auth.ResponseDTO;
 import br.com.voltz.projetos.tres.ligadaslegendas.models.User;
 import br.com.voltz.projetos.tres.ligadaslegendas.repositories.UserRepository;
-import br.com.voltz.projetos.tres.ligadaslegendas.services.TokenService;
+import br.com.voltz.projetos.tres.ligadaslegendas.services.auth.TokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;

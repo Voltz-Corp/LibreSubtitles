@@ -46,20 +46,20 @@ export const StyledSelect = styled(Select).attrs({
       color: ${theme.colors.primary};
 
       &:hover {
-        background-color: ${theme.colors.secondary};
+        background-color: ${theme.colors.primary_50};
       }
     }
 
     .react-select__option--is-selected {
-      background-color: ${theme.colors.secondary};
+      background-color: ${theme.colors.primary_50};
     }
 
     .react-select__dropdown-indicator {
-      color: ${theme.colors.secondary};
+      color: ${theme.colors.primary_50};
     }
 
     .react-select__placeholder {
-      color: ${theme.colors.secondary};
+      color: ${theme.colors.primary_50};
     }
   `}
 `;

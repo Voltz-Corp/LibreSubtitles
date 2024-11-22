@@ -41,7 +41,7 @@ public class SubtitleController {
         }
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/download/{id}")
     public ResponseEntity<FileSystemResource> downloadFile(@PathVariable String id) throws IOException {
         Subtitle subtitle = subtitleService.getSubtitleById(UUID.fromString(id));
 
@@ -56,6 +56,17 @@ public class SubtitleController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + subtitle.getFileName())
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM_VALUE)
                 .body(fileResource);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Subtitle> getSubtitleById(@PathVariable String id) throws IOException {
+        Subtitle subtitle = subtitleService.getSubtitleById(UUID.fromString(id));
+
+        if (subtitle == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        return ResponseEntity.ok().body(subtitle);
     }
 
     @GetMapping("/")

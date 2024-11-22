@@ -16,12 +16,19 @@ export const MovieContent = styled.section`
 
 export const MovieInfo = styled.div`
   ${({ theme }) => css`
-    width: 61rem;
+    width: 80rem;
 
     p {
-      color: ${theme.colors.quaternary};
+      color: ${theme.colors.primary_900};
       font-size: ${theme.font.sizes.large};
       line-height: ${theme.spacings.medium};
+      text-align: justify;
+      letter-spacing: 0.05rem;
+      margin: ${theme.spacings.small} 0;
+
+      &:first-child {
+        font-weight: ${theme.font.bold};
+      }
     }
   `}
 `;
@@ -32,14 +39,14 @@ export const InfoHeader = styled.div`
     align-items: center;
 
     h2 {
-      color: ${theme.colors.primary};
-      font-size: ${theme.font.sizes.xxlarge};
+      color: ${theme.colors.primary_900};
+      font-size: ${theme.font.sizes['3xlarge']};
     }
 
     svg {
       font-size: ${theme.font.sizes.xxlarge};
       stroke: none;
-      fill: ${theme.colors.primary};
+      fill: ${theme.colors.secondary};
       margin: 0 ${theme.spacings.xsmall};
     }
 
@@ -53,11 +60,12 @@ export const InfoHeader = styled.div`
 
 export const MoviePoster = styled.img`
   border-radius: ${({ theme }) => theme.border.radius.medium};
+  height: 32rem;
 `;
 
 export const TableContainer = styled.section`
   ${({ theme }) => css`
-    background-color: ${theme.colors.white};
+    background-color: ${theme.colors.primary_50};
     border-radius: ${theme.border.radius.xxsmall};
     width: 100%;
     margin-top: ${theme.spacings.medium};
@@ -76,7 +84,7 @@ export const TableContainer = styled.section`
     }
 
     h3 {
-      color: ${theme.colors.primary};
+      color: ${theme.colors.primary_700};
       font-size: ${theme.font.sizes.large};
     }
   `}
@@ -99,7 +107,7 @@ export const SubtitleTable = styled.table`
     }
 
     thead th {
-      color: ${theme.colors.primary};
+      color: ${theme.colors.primary_700};
       font-weight: 500;
       padding: ${theme.spacings.xsmall} ${theme.spacings.small};
       font-size: ${theme.font.sizes.medium};
@@ -127,6 +135,14 @@ export const SubtitleTable = styled.table`
       svg {
         font-size: ${theme.font.sizes.xlarge};
         color: ${theme.colors.primary};
+      }
+    }
+
+    a {
+      color: ${theme.colors.primary};
+
+      &:hover {
+        text-decoration: underline;
       }
     }
   `}

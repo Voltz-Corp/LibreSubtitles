@@ -6,7 +6,7 @@ export const Wrapper = styled.header`
     align-items: center;
     justify-content: space-between;
     padding: ${theme.spacings.xsmall} ${theme.spacings.medium};
-    border-bottom: 1px solid ${theme.colors.secondary};
+    border-bottom: 1px solid ${theme.colors.primary_50};
 
     img {
       width: 30rem;
@@ -31,8 +31,9 @@ export const Navigation = styled.nav`
     }
 
     a {
-      color: ${theme.colors.primary};
+      color: ${theme.colors.primary_900};
       font-size: ${theme.font.sizes.medium};
+      letter-spacing: 0.05rem;
     }
   `}
 `;

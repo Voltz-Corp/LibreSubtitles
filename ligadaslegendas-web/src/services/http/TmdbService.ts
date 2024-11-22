@@ -25,12 +25,22 @@ export const TmdbService = {
       return err.toJSON();
     }
   },
-  getMovie: async function (id: string | undefined) {
+  getMovieById: async function (id: string | undefined | null) {
     try {
       const response = await tmdbApi.get(
         `/movie/${id}?language=pt-BR&append_to_response=credits`,
       );
       return response.data;
+    } catch (err: any) {
+      return err.toJSON();
+    }
+  },
+  getMovieByName: async function (value: string | undefined | null) {
+    try {
+      const response = await tmdbApi.get(
+        `/search/movie?language=pt-BR&append_to_response=credits&query=${value}`,
+      );
+      return response.data.results;
     } catch (err: any) {
       return err.toJSON();
     }

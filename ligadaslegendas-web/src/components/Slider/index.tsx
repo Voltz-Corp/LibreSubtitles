@@ -15,12 +15,18 @@ export function Slider({ children }: SliderProps) {
     loop: true,
     slides: {
       origin: 'center',
-      perView: 8,
+      perView: 10,
       spacing: 12,
     },
     breakpoints: {
-      '(max-width: 970px)': {
-        slides: { perView: 1 },
+      '(max-width: 1780px)': {
+        slides: { origin: 'center', perView: 8, spacing: 12 },
+      },
+      '(max-width: 1230px)': {
+        slides: { origin: 'center', perView: 6, spacing: 12 },
+      },
+      '(max-width: 880px)': {
+        slides: { origin: 'center', perView: 4, spacing: 12 },
       },
     },
     created() {

@@ -6,6 +6,7 @@ import br.com.voltz.projetos.tres.ligadaslegendas.models.Subtitle;
 import br.com.voltz.projetos.tres.ligadaslegendas.models.User;
 import br.com.voltz.projetos.tres.ligadaslegendas.repositories.SubtitleRepository;
 import br.com.voltz.projetos.tres.ligadaslegendas.repositories.UserRepository;
+import br.com.voltz.projetos.tres.ligadaslegendas.services.auth.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,7 +17,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -26,6 +26,7 @@ public class SubtitleService {
     private SubtitleRepository subtitleRepository;
     private UserRepository userRepository;
     private TokenService tokenService;
+
 
     @Value("${file.upload-dir}")
     private String uploadDir;
@@ -60,5 +61,17 @@ public class SubtitleService {
 
     public List<Subtitle> getAllSubtitles() {
         return subtitleRepository.findAll();
+    }
+
+    public void updateRating(String subtitleId, int newRating) {
+        Subtitle subtitle = getSubtitleById(UUID.fromString(subtitleId));
+        double currentRating = subtitle.getRating();
+        int currentRatingCounter = subtitle.getRatingCounter();
+
+        double newAverage = ((currentRating * currentRatingCounter) + newRating) / (currentRatingCounter + 1);
+
+        subtitle.setRatingCounter(currentRatingCounter + 1);
+        subtitle.setRating(newAverage);
+        subtitleRepository.save(subtitle);
     }
 }

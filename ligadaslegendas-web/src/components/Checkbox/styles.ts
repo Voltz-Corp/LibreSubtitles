@@ -24,7 +24,7 @@ export const Wrapper = styled.div`
       transition: all 0.3s;
     }
     .checkboxRoot:hover {
-      background-color: ${theme.colors.secondary};
+      background-color: ${theme.colors.primary_50};
     }
     .checkboxRoot:focus {
       box-shadow: 0 0 0 2px ${theme.colors.primary};

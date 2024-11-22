@@ -41,7 +41,7 @@ export function Movie() {
 
   const { data: movie } = useQuery<MovieDetailed>({
     queryKey: ['movie', id],
-    queryFn: () => TmdbService.getMovie(id),
+    queryFn: () => TmdbService.getMovieById(id),
   });
 
   const { data: subtitles } = useQuery<Subtitle[]>({
@@ -58,7 +58,8 @@ export function Movie() {
       directorsSet.add(member.id);
       return !duplicate;
     })
-    .map((member) => `${member.name}, `);
+    .map((member) => member.name)
+    .join(', ');
 
   function handleAskForSubtitle() {
     toast.success('Pedido de legenda enviado!');
@@ -90,29 +91,35 @@ export function Movie() {
       <S.Wrapper>
         <S.MovieContent>
           <S.MovieInfo>
-            <p>Filme</p>
             <S.InfoHeader>
               <h2>{movie?.title}</h2> <FiStar />{' '}
               <span>{movie?.vote_average} / 10 TMDb</span>
             </S.InfoHeader>
             <div>
               <p>
-                Ano de lançamento: {movie?.release_date} | Duração:{' '}
-                {movie?.runtime}min | Gênero:{' '}
-                {movie?.genres.map((movie) => `${movie.name}, `)}
+                {' '}
+                {movie?.release_date.split('-')[0]} • {movie?.runtime}min •{' '}
+                {movie?.genres.map((genre, index) =>
+                  index === movie.genres.length - 1
+                    ? genre.name
+                    : `${genre.name} • `,
+                )}
               </p>
-              <p>Direção: {directors}</p>
+
+              <p>{movie?.overview}</p>
+
+              <p>Direção por: {directors}</p>
               <p>Título original: {movie?.original_title}</p>
             </div>
           </S.MovieInfo>
           <S.MoviePoster
-            src={`https://image.tmdb.org/t/p/w500/${movie?.backdrop_path}`}
+            src={`https://image.tmdb.org/t/p/w500/${movie?.poster_path}`}
           />
         </S.MovieContent>
 
         <S.TableContainer>
           <div>
-            <h3>Legendas</h3>
+            <h3>Legendas disponíveis</h3>
 
             <div>
               <Button size="sm" onClick={handleAddSubtitle}>
@@ -137,7 +144,9 @@ export function Movie() {
             <tbody>
               {subtitles?.map((subtitle: Subtitle) => (
                 <tr>
-                  <td>{subtitle.fileName}</td>
+                  <td>
+                    <a href={`/legenda/${subtitle.id}`}>{subtitle.fileName}</a>
+                  </td>
                   <td>{subtitle.user.name}</td>
                   <td>{subtitle.rating}</td>
                   <td>
