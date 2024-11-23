@@ -1,4 +1,6 @@
 package br.com.voltz.projetos.tres.ligadaslegendas.dto.auth;
 
-public record ResponseDTO (String token, String name) {
+import br.com.voltz.projetos.tres.ligadaslegendas.models.User;
+
+public record ResponseDTO (String token, User user) {
 }

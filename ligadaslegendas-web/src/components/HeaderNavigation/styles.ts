@@ -40,12 +40,13 @@ export const Navigation = styled.nav`
 
 export const Profile = styled.div`
   ${({ theme }) => css`
-    width: 3.2rem;
-    height: 3.2rem;
+    width: 4.8rem;
+    height: 4.8rem;
     border-radius: 50%;
     background-color: ${theme.colors.primary};
     color: ${theme.colors.white};
     font-weight: ${theme.font.bold};
+    font-size: ${theme.font.sizes.medium};
 
     display: flex;
     align-items: center;

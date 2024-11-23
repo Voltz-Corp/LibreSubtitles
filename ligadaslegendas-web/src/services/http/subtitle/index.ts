@@ -7,6 +7,11 @@ export type SubtitleUploadProps = {
   tmdbId: number;
 };
 
+export type SubtitleSynchronizeProps = {
+  file: Blob;
+  seconds: number;
+};
+
 export const SubtitleService = {
   upload: async (data: SubtitleUploadProps) => {
     await api.post('/subtitle/upload', data, {
@@ -26,5 +31,14 @@ export const SubtitleService = {
   getSubtitleById: async (id: string) => {
     const { data } = await api.get(`subtitle/${id}`);
     return data;
+  },
+  synchronize: async (data: SubtitleSynchronizeProps) => {
+    const response = await api.post('/subtitle/synchronize', data, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+
+    return response;
   },
 };

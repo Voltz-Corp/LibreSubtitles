@@ -1,41 +1,84 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { HeaderNavigation } from '../../components/HeaderNavigation';
 import * as S from './styles';
 import { BiSolidCloudUpload } from 'react-icons/bi';
 import { Button } from '../../components/Button';
 import { Helmet } from 'react-helmet-async';
-import { FiMinus, FiPlus } from 'react-icons/fi';
+import { FiMinus, FiPlus, FiX } from 'react-icons/fi';
 import { Input } from '../../components/Input';
 import { useForm } from 'react-hook-form';
+import { useMutation } from '@tanstack/react-query';
+import { SubtitleService } from '../../services/http/subtitle';
+import { toast } from 'sonner';
+import { MdSubtitles } from 'react-icons/md';
+import { handleFormatFileSize } from '../../utils/formatFileSize';
 
 export function Synchronize() {
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const { register, setValue, getValues } = useForm();
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  const { mutate } = useMutation({
+    mutationFn: async (data: any) => await SubtitleService.synchronize(data),
+    onSuccess: async (response: any) => {
+      const { data: file } = response;
+
+      const subtitleBlob = new Blob([file]);
+      const subtitleUrl = URL.createObjectURL(subtitleBlob);
+
+      const link = document.createElement('a');
+
+      link.href = subtitleUrl;
+      link.setAttribute('download', `adjusted_${selectedFile?.name}`);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+
+      setValue('seconds', 0);
+      setSelectedFile(null);
+    },
+    onError: () => {
+      toast.error('Ocorreu um erro ao sincronizar legenda!');
+    },
+  });
+
+  function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0] || null;
+    setSelectedFile(file);
+  }
+
+  function handleRemoveFile() {
+    setSelectedFile(null);
+  }
 
   function handleFileInputClick() {
     fileInputRef.current?.click();
   }
 
-  function handleIncreaseMilliseconds() {
-    setValue(
-      'milliseconds',
-      Math.round((getValues('milliseconds') + 0.05) * 100) / 100,
-      {
-        shouldValidate: true,
-        shouldDirty: true,
-      },
-    );
+  function handleIncreaseSeconds() {
+    setValue('seconds', Math.round((getValues('seconds') + 0.05) * 100) / 100, {
+      shouldValidate: true,
+      shouldDirty: true,
+    });
   }
 
-  function handleDecreaseMilliseconds() {
-    setValue(
-      'milliseconds',
-      Math.round((getValues('milliseconds') - 0.05) * 100) / 100,
-      {
-        shouldValidate: true,
-        shouldDirty: true,
-      },
-    );
+  function handleDecreaseSeconds() {
+    setValue('seconds', Math.round((getValues('seconds') - 0.05) * 100) / 100, {
+      shouldValidate: true,
+      shouldDirty: true,
+    });
+  }
+
+  function handleSynchronizeSubtitle() {
+    const data = getValues();
+    const formData = new FormData();
+
+    if (selectedFile) {
+      formData.append('file', selectedFile);
+    }
+    formData.append('seconds', data.seconds);
+
+    mutate(formData);
   }
 
   return (
@@ -46,16 +89,42 @@ export function Synchronize() {
         <h1>Sincronização de Legenda</h1>
         <S.UploadForm onClick={handleFileInputClick}>
           <BiSolidCloudUpload />
-          <S.Formats>Formatos aceitos: WebVTT, .srt, .txt?...</S.Formats>
-          <S.FileInput ref={fileInputRef} type="file" />
+          <S.Formats>Formatos aceitos: .srt</S.Formats>
+          <S.FileInput
+            onChange={handleFileChange}
+            ref={fileInputRef}
+            type="file"
+            accept=".srt"
+          />
         </S.UploadForm>
 
+        <S.FileList>
+          {selectedFile && (
+            <>
+              <S.File>
+                <S.Icon>
+                  <MdSubtitles />
+                </S.Icon>
+
+                <div>
+                  <p>{selectedFile.name}</p>
+                  <p>{handleFormatFileSize(selectedFile.size)}</p>
+                </div>
+
+                <button type="button" onClick={handleRemoveFile}>
+                  <FiX />
+                </button>
+              </S.File>
+            </>
+          )}
+        </S.FileList>
+
         <S.Synchronize>
-          <Button type="button" onClick={handleDecreaseMilliseconds}>
+          <Button type="button" onClick={handleDecreaseSeconds}>
             <FiMinus />
           </Button>
-          <Input value={0.0} {...register('milliseconds')} />
-          <Button type="button" onClick={handleIncreaseMilliseconds}>
+          <Input value={0.0} {...register('seconds')} />
+          <Button type="button" onClick={handleIncreaseSeconds}>
             <FiPlus />
           </Button>
         </S.Synchronize>
@@ -65,7 +134,7 @@ export function Synchronize() {
             Voltar
           </Button>
 
-          <Button fullWidth size="lg">
+          <Button fullWidth size="lg" onClick={handleSynchronizeSubtitle}>
             Enviar
           </Button>
         </S.SubtitleUploadActions>

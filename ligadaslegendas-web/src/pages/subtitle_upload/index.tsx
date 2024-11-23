@@ -80,11 +80,11 @@ export function SubtitleUpload() {
     const movieNameFormatted = data.movie.label.split(' ').join('.');
     const movieReleaseDate = movie?.release_date;
     const subtitleLanguage: string = data.language.value;
-    const subtitleClosedCaptions = data.isClosedCaptions ? 'CC' : '';
+    const subtitleClosedCaptions = data.isClosedCaptions ? '.CC' : '';
 
     const fileName = `${movieNameFormatted}.${
       movieReleaseDate?.split('-')[0]
-    }.${subtitleLanguage.toUpperCase()}.${subtitleClosedCaptions}.srt`;
+    }.${subtitleLanguage.toUpperCase()}${subtitleClosedCaptions}.srt`;
 
     if (selectedFile) {
       formData.append('file', selectedFile);

@@ -50,6 +50,76 @@ export const Formats = styled.p`
   `}
 `;
 
+export const FileList = styled.div`
+  margin-top: ${({ theme }) => theme.spacings.medium};
+`;
+
+export const File = styled.div`
+  ${({ theme }) => css`
+    width: 100%;
+    border: 1px solid ${theme.colors.lightGray};
+    border-radius: ${theme.border.radius.xsmall};
+    padding: 0.8rem;
+    height: 9rem;
+    position: relative;
+
+    display: flex;
+    gap: ${theme.spacings.xxsmall};
+
+    p {
+      color: ${theme.colors.primary};
+      margin-top: 0.4rem;
+
+      &:first-child {
+        font-size: ${theme.font.sizes.large};
+      }
+
+      &:last-child {
+        font-size: ${theme.font.sizes.small};
+      }
+    }
+
+    button {
+      height: 2.4rem;
+      width: 2.4rem;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      position: absolute;
+      right: 1.2rem;
+      top: 1.2rem;
+
+      background: none;
+      border: none;
+      cursor: pointer;
+
+      svg {
+        font-size: ${theme.font.sizes.medium};
+        color: ${theme.colors.black};
+      }
+    }
+  `}
+`;
+
+export const Icon = styled.div`
+  ${({ theme }) => css`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4.8rem;
+    height: 4.8rem;
+    border: 1px solid ${theme.colors.lightGray};
+    border-radius: ${theme.border.radius.xsmall};
+
+    svg {
+      font-size: ${theme.font.sizes.xxlarge};
+      color: ${theme.colors.primary};
+    }
+  `}
+`;
+
 export const FileInput = styled.input`
   visibility: hidden;
 `;

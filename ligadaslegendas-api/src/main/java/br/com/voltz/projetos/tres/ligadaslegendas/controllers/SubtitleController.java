@@ -1,6 +1,7 @@
 package br.com.voltz.projetos.tres.ligadaslegendas.controllers;
 
 import br.com.voltz.projetos.tres.ligadaslegendas.dto.subtitle.GetSubtitleByMovieIdDTO;
+import br.com.voltz.projetos.tres.ligadaslegendas.dto.subtitle.SubtitleSynchronizeDTO;
 import br.com.voltz.projetos.tres.ligadaslegendas.dto.subtitle.SubtitleUploadDTO;
 import br.com.voltz.projetos.tres.ligadaslegendas.models.Subtitle;
 import br.com.voltz.projetos.tres.ligadaslegendas.services.SubtitleService;
@@ -40,6 +41,29 @@ public class SubtitleController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao salvar o arquivo.");
         }
     }
+
+    @PostMapping("/synchronize")
+    public ResponseEntity<?> synchronizeSubtitle(@ModelAttribute SubtitleSynchronizeDTO body) {
+        try {
+            if (body.file().isEmpty() || !body.file().getOriginalFilename().endsWith(".srt")) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body("Arquivo inválido. Envie um arquivo .srt.");
+            }
+
+            FileSystemResource adjustedFile = subtitleService.synchronizeSubtitle(body);
+
+            String adjustedFileName = "adjusted_" + body.file().getOriginalFilename();
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + adjustedFileName + "\"")
+                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                    .body(adjustedFile);
+        } catch (IOException e) {
+            System.err.println("Error processing subtitle: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Erro ao salvar o arquivo.");
+        }
+    }
+
 
     @GetMapping("/download/{id}")
     public ResponseEntity<FileSystemResource> downloadFile(@PathVariable String id) throws IOException {

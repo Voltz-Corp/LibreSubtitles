@@ -1,8 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../Button';
 import * as S from './styles';
+import { useAuth } from '../../hooks/useAuth';
 
 export function HeaderNavigation() {
+  const { user } = useAuth();
   const navigate = useNavigate();
 
   function handleGoToLogin() {
@@ -35,7 +37,11 @@ export function HeaderNavigation() {
           </li>
         </ul>
 
-        <Button onClick={handleGoToLogin}>Entrar</Button>
+        {user ? (
+          <S.Profile>{user.name.charAt(0)}</S.Profile>
+        ) : (
+          <Button onClick={handleGoToLogin}>Entrar</Button>
+        )}
       </S.Navigation>
     </S.Wrapper>
   );
