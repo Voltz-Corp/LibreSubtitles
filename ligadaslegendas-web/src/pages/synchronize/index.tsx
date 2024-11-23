@@ -14,6 +14,7 @@ import { MdSubtitles } from 'react-icons/md';
 import { handleFormatFileSize } from '../../utils/formatFileSize';
 
 export function Synchronize() {
+  const [isDragging, setIsDragging] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const { register, setValue, getValues } = useForm();
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -42,6 +43,30 @@ export function Synchronize() {
     },
   });
 
+  function handleDragOver(event: React.DragEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setIsDragging(true);
+  }
+
+  function handleDragLeave() {
+    setIsDragging(false);
+  }
+
+  function handleDrop(event: React.DragEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setIsDragging(false);
+
+    const droppedFile = event.dataTransfer.files[0];
+    if (!droppedFile) return;
+
+    if (droppedFile.type !== 'application/x-subrip') {
+      toast.error('Apenas arquivos .srt são permitidos.');
+      return;
+    }
+
+    setSelectedFile(droppedFile);
+  }
+
   function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0] || null;
     setSelectedFile(file);
@@ -53,6 +78,18 @@ export function Synchronize() {
 
   function handleFileInputClick() {
     fileInputRef.current?.click();
+  }
+
+  function handleSynchronizeSubtitle() {
+    const data = getValues();
+    const formData = new FormData();
+
+    if (selectedFile) {
+      formData.append('file', selectedFile);
+    }
+    formData.append('seconds', data.seconds);
+
+    mutate(formData);
   }
 
   function handleIncreaseSeconds() {
@@ -69,25 +106,19 @@ export function Synchronize() {
     });
   }
 
-  function handleSynchronizeSubtitle() {
-    const data = getValues();
-    const formData = new FormData();
-
-    if (selectedFile) {
-      formData.append('file', selectedFile);
-    }
-    formData.append('seconds', data.seconds);
-
-    mutate(formData);
-  }
-
   return (
     <>
       <Helmet title="Sincronizar Legenda" />
       <HeaderNavigation />
       <S.SubtitleUploadContainer>
         <h1>Sincronização de Legenda</h1>
-        <S.UploadForm onClick={handleFileInputClick}>
+        <S.UploadForm
+          onClick={handleFileInputClick}
+          onDrop={(event) => handleDrop(event)}
+          onDragOver={(event) => handleDragOver(event)}
+          onDragLeave={handleDragLeave}
+          isDragging={isDragging}
+        >
           <BiSolidCloudUpload />
           <S.Formats>Formatos aceitos: .srt</S.Formats>
           <S.FileInput

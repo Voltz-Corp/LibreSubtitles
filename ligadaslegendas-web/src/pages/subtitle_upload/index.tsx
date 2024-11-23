@@ -20,6 +20,7 @@ import { languages } from '../../constants/language';
 import { handleFormatFileSize } from '../../utils/formatFileSize';
 
 export function SubtitleUpload() {
+  const [isDragging, setIsDragging] = useState(false);
   const [searchedMovie, setSearchedMovie] = useState('');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -106,6 +107,30 @@ export function SubtitleUpload() {
     setSelectedFile(null);
   }
 
+  function handleDragOver(event: React.DragEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setIsDragging(true);
+  }
+
+  function handleDragLeave() {
+    setIsDragging(false);
+  }
+
+  function handleDrop(event: React.DragEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setIsDragging(false);
+
+    const droppedFile = event.dataTransfer.files[0];
+    if (!droppedFile) return;
+
+    if (droppedFile.type !== 'application/x-subrip') {
+      toast.error('Apenas arquivos .srt são permitidos.');
+      return;
+    }
+
+    setSelectedFile(droppedFile);
+  }
+
   useEffect(() => {
     setValue('isClosedCaptions', false);
     setValue('language', languages[0]);
@@ -118,7 +143,13 @@ export function SubtitleUpload() {
       <HeaderNavigation />
       <S.SubtitleUploadContainer>
         <h1>Adicione sua legenda</h1>
-        <S.UploadForm onClick={handleFileInputClick}>
+        <S.UploadForm
+          onClick={handleFileInputClick}
+          onDrop={(event) => handleDrop(event)}
+          onDragOver={(event) => handleDragOver(event)}
+          onDragLeave={handleDragLeave}
+          isDragging={isDragging}
+        >
           <>
             <BiSolidCloudUpload />
             <S.Formats>Formato aceito: .srt</S.Formats>

@@ -1,6 +1,10 @@
 import styled, { css } from 'styled-components';
 import { Container } from '../../components/Container';
 
+type UploadFormProps = {
+  isDragging: boolean;
+};
+
 export const Wrapper = styled.main``;
 
 export const SubtitleUploadContainer = styled(Container)`
@@ -15,8 +19,8 @@ export const SubtitleUploadContainer = styled(Container)`
   `}
 `;
 
-export const UploadForm = styled.form`
-  ${({ theme }) => css`
+export const UploadForm = styled.form<UploadFormProps>`
+  ${({ theme, isDragging }) => css`
     width: 100%;
     height: 32.6rem;
     border: 2px dashed ${theme.colors.primary};
@@ -28,6 +32,8 @@ export const UploadForm = styled.form`
     align-items: center;
     justify-content: center;
     flex-direction: column;
+
+    background-color: ${isDragging && theme.colors.primary_50};
 
     transition: all 0.3s;
     cursor: pointer;
