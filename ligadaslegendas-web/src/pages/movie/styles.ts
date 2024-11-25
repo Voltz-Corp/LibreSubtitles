@@ -12,6 +12,11 @@ export const MovieContent = styled.section`
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
+  gap: ${({ theme }) => theme.spacings.large};
+
+  @media (max-width: 780px) {
+    flex-direction: column;
+  }
 `;
 
 export const MovieInfo = styled.div`
@@ -29,6 +34,10 @@ export const MovieInfo = styled.div`
       &:first-child {
         font-weight: ${theme.font.bold};
       }
+    }
+
+    @media (max-width: 780px) {
+      width: 100%;
     }
   `}
 `;
@@ -86,6 +95,22 @@ export const TableContainer = styled.section`
     h3 {
       color: ${theme.colors.primary_700};
       font-size: ${theme.font.sizes.large};
+    }
+
+    @media (max-width: 560px) {
+      overflow-x: scroll;
+
+      > div {
+        flex-direction: column;
+        align-items: normal;
+        gap: ${theme.spacings.xsmall};
+
+        div {
+          button {
+            width: 100%;
+          }
+        }
+      }
     }
   `}
 `;

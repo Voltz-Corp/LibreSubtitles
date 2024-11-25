@@ -18,6 +18,7 @@ import { TmdbService } from '../../services/http/TmdbService';
 import { MovieProps } from '../landing_page';
 import { languages } from '../../constants/language';
 import { handleFormatFileSize } from '../../utils/formatFileSize';
+import { useAuth } from '../../hooks/useAuth';
 
 export function SubtitleUpload() {
   const [isDragging, setIsDragging] = useState(false);
@@ -27,6 +28,7 @@ export function SubtitleUpload() {
   const [searchParams] = useSearchParams();
   const { register, getValues, control, setValue } = useForm();
   const debouncedSearchMovie = useDebounce(searchedMovie, 500);
+  const { user } = useAuth();
 
   const tmdbId = searchParams.get('movieId');
 
@@ -69,6 +71,9 @@ export function SubtitleUpload() {
       toast.success('Legenda enviada com sucesso!');
     },
     onError: () => {
+      if (!user) {
+        return toast.error('Você não está autenticado!');
+      }
       toast.error('Ocorreu um erro ao enviar legenda!');
     },
   });

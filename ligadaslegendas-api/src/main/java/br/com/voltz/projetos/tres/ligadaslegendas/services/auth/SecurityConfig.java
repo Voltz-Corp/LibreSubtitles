@@ -23,6 +23,10 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+    private static final List<String> PRIVATE_ENDPOINTS = Arrays.asList(
+            "/rating/**",
+            "/subtitle/upload"
+    );
 
     @Autowired
     private CustomUserDetailsService userDetailsService;
@@ -37,9 +41,8 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
-                        .anyRequest().authenticated()
+                        .requestMatchers(PRIVATE_ENDPOINTS.toArray(new String[0])).authenticated()
+                        .anyRequest().permitAll()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();

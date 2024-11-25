@@ -7,7 +7,6 @@ import { Helmet } from 'react-helmet-async';
 import { MovieProps } from '../landing_page';
 import { FiDownload, FiStar } from 'react-icons/fi';
 import { Button } from '../../components/Button';
-import { toast } from 'sonner';
 import { SubtitleService } from '../../services/http/subtitle';
 import { Subtitle } from '../../types';
 
@@ -61,9 +60,10 @@ export function Movie() {
     .map((member) => member.name)
     .join(', ');
 
-  function handleAskForSubtitle() {
-    toast.success('Pedido de legenda enviado!');
-  }
+  // Funcionalidade não implementada
+  // function handleAskForSubtitle() {
+  //   toast.success('Pedido de legenda enviado!');
+  // }
 
   function handleAddSubtitle() {
     navigate(`/upload?movieId=${id}`);
@@ -128,9 +128,10 @@ export function Movie() {
                 Adicionar legenda
               </Button>
 
-              <Button size="sm" onClick={handleAskForSubtitle}>
+              {/* Funcionalidade não implementada */}
+              {/* <Button size="sm" onClick={handleAskForSubtitle}>
                 Pedir legenda
-              </Button>
+              </Button> */}
             </div>
           </div>
 

@@ -28,6 +28,9 @@ export function Slider({ children }: SliderProps) {
       '(max-width: 880px)': {
         slides: { origin: 'center', perView: 4, spacing: 12 },
       },
+      '(max-width: 480px)': {
+        slides: { origin: 'center', perView: 2, spacing: 12 },
+      },
     },
     created() {
       setLoaded(true);
